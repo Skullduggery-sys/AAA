@@ -5,11 +5,12 @@
 #include <ostream>
 #include <time.h>
 #include <vector>
+#include <chrono>
 #include "../inc/matrix.h"
 #include "../inc/time_measurment.h"
 #include "../inc/fuzzyCMeans.h"
 #include <algorithm>
-#define REPS 1
+#define REPS 2000
 using namespace std;
 
 std::vector<Color*> generate_random_vector(size_t len) {
@@ -38,19 +39,19 @@ long get_time() {
 
 double get_cpu_time_t (std::vector<Color *> &colors, size_t &clustersCount, double m, size_t threadsCount)
 {
-    clock_t start_t, end_t;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_t, end_t;
     double total_t;
     std::vector<Centroid *> centroids;
     if (!threadsCount) {
-        start_t = get_time();
+        start_t = std::chrono::high_resolution_clock::now();
         fuzzyCMeans(colors, clustersCount, m, centroids);
-        end_t = get_time();
+        end_t = std::chrono::high_resolution_clock::now();
     } else {
-        start_t = get_time();
+        start_t = std::chrono::high_resolution_clock::now();
         parallelFuzzyCMeans(colors, clustersCount, m, centroids, threadsCount);
-        end_t = get_time();
+        end_t = std::chrono::high_resolution_clock::now();
     }
-    total_t = (double) (end_t - start_t) ;// CLOCKS_PER_SEC;
+    total_t = (double) std::chrono::duration_cast<std::chrono::microseconds>(end_t - start_t).count() ;// CLOCKS_PER_SEC;
     return total_t;
 }
 
@@ -68,18 +69,19 @@ void _get_time(std::ofstream& stream, size_t max_len) {
     size_t i = 2;
     std::locale locale("C");
     stream.imbue(locale);
+
+    size_t threadsCount = 64;
     stream << "len,0,1,2,4,8,16,32,64" << std::endl;
     double m = 1.5;
-    size_t  TEMP = 100;
     while (i <= max_len) {
-        vector<int> time(8, 0);
-
+        vector<int> time(threadsCount, 0);
         auto colors = generate_random_vector(i);
+        size_t clustersCount = colors.size();
         size_t t = 0;
         size_t counter = 0;
-        while (t <= 8) {
+        while (t <= threadsCount) {
             for (size_t j = 0; j < REPS; j++) {
-                time[counter] += get_cpu_time_t(colors, TEMP, m, t);
+                time[counter] += get_cpu_time_t(colors, clustersCount, m, t);
             }
 
             if (t == 0)
@@ -90,7 +92,7 @@ void _get_time(std::ofstream& stream, size_t max_len) {
             counter++;
         }
         stream << i;
-        for (size_t i = 0; i < time.size(); i++) {
+        for (size_t i = 0; i < 8; i++) {
             time[i] /= REPS;
             stream << "," << time[i];
         }

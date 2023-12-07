@@ -31,7 +31,7 @@ void normalizeMembership(Matrix<double> &membership);
 
 void fillMembership(Matrix<double> &membership);
 
-void renewCenters(const Matrix<double> &membership, std::vector<Color *> &colors, double m, size_t start, size_t end, std::vector<Centroid *>& centers);
+void renewCenters(const Matrix<double> &membership, std::vector<Color *> &colors, double m, size_t start, size_t end, std::vector<Centroid *>& newCenter);
 
 double distToCenter(Color *point, Centroid *center);
 
@@ -39,7 +39,10 @@ double calculateU(double dist, double m);
 
 double decision(const std::vector<Color *> &colors, const std::vector<Centroid *> &centers, const Matrix<double> &membership);
 
-void decision(const std::vector<Color *> &colors, const std::vector<Centroid *> &centers, const Matrix<double> &membership, double &distance, Borders &borders);
+void decision(const std::vector<Color *> &colors, const std::vector<Centroid *> &centers,
+              const Matrix<double> &membership, double &distance, Borders &borders);
+
+void helper(std::vector<Color*>& colors, std::vector<Centroid*>& centers, double m, size_t start, size_t end, Matrix<double> &membership);
 
 void calculateDistances(const std::vector<Color*>& colors, const std::vector<Centroid*>& centers,
                         size_t start, size_t end, const double m, Matrix<double>& membership);
