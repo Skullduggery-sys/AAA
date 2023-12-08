@@ -1,5 +1,6 @@
 #include "../inc/fuzzyCMeans.h"
 #include "../inc/time_measurment.h"
+#include "../inc/customMutex.h"
 
 #include <thread>
 #include <mutex>
@@ -9,10 +10,13 @@
 #include <memory>
 #include <iostream>
 
-#define MAXREPS 150
+#define MAXREPS 5000
 #define EPS 0.001
 
 std::shared_mutex myMutex;
+std::mutex anotherMutex;
+
+CustomMutex customMutex;
 
 std::vector<Centroid *> generateRandCenters(size_t clustersCount) {
     std::random_device rd;
@@ -61,16 +65,21 @@ void helper(std::vector<Color*>& colors, std::vector<Centroid*>& centers, double
     for (size_t i = 0; i < MAXREPS && std::abs(currDecision - prevDecision) > EPS; i++) { //
         prevDecision = currDecision;
 
+        customMutex.lock_shared();
         renewCenters(membership, colors, m, start, end, centers);
 
         calculateDistances(colors, centers, start, end, m, membership);
+        customMutex.unlock_shared();
 
-        if (myMutex.try_lock()) {
+        if (customMutex.lock()) {
             normalizeMembership(membership);
-            myMutex.unlock();
+            customMutex.unlock();
         }
+
         Borders border(start, end);
+        customMutex.lock_shared();
         decision(colors, centers, membership, currDecision, border);
+        customMutex.unlock_shared();
     }
 }
 
@@ -117,7 +126,9 @@ void decision(const std::vector<Color *> &colors, const std::vector<Centroid *> 
             sum += membership[i][j] * distToCenter(colors[i], centers[j]);
         }
     }
+    anotherMutex.lock();
     distance = sum;
+    anotherMutex.unlock();
 }
 
 double decision(const std::vector<Color *> &colors, const std::vector<Centroid *> &centers, const Matrix<double> &membership) {
@@ -150,7 +161,6 @@ void renewCenters(const Matrix<double> &membership, std::vector<Color *> &colors
         double tempBg = 0.0;
         //double tempAb = 0.0;
         double tempBb = 0.0;
-
 
         for (size_t key = 0; key < membership.getNumberOfRows(); ++key) {
             tempA += std::pow(membership[key][i], m);

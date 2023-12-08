@@ -1,19 +1,13 @@
 [0] Config.pm:304> INFO - This is Biber 2.14 (beta)
 [0] Config.pm:307> INFO - Logfile is 'report.blg'
-[36] biber:322> INFO - === Вт дек  5, 2023, 22:56:54
+[36] biber:322> INFO - === Пт дек  8, 2023, 19:56:55
 [44] Biber.pm:415> INFO - Reading 'report.bcf'
-[97] Biber.pm:943> INFO - Found 3 citekeys in bib section 0
-[105] Biber.pm:4256> INFO - Processing section 0
+[97] Biber.pm:943> INFO - Found 4 citekeys in bib section 0
+[104] Biber.pm:4256> INFO - Processing section 0
 [105] Utils.pm:75> INFO - Globbing data source 'biblio.bib'
 [105] Utils.pm:91> INFO - Globbed data source 'biblio.bib' to biblio.bib
 [110] Biber.pm:4455> INFO - Looking for bibtex format file 'biblio.bib' for section 0
 [110] bibtex.pm:1653> INFO - LaTeX decoding ...
 [112] bibtex.pm:1471> INFO - Found BibTeX data source 'biblio.bib'
-[115] Utils.pm:293> WARN - I didn't find a database entry for 'winForProf' (section 0)
-[118] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[119] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
-[119] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'ru-RU'
-[119] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
-[119] bbl.pm:652> INFO - Writing 'report.bbl' with encoding 'UTF-8'
-[120] bbl.pm:755> INFO - Output to report.bbl
-[120] Biber.pm:128> INFO - WARNINGS: 1
+[132] Utils.pm:309> ERROR - BibTeX subsystem: /tmp/biber_tmp_8Zvu/biblio.bib_5768.utf8, line 24, syntax error: found "journal", expected end of entry ("}" or ")") (skipping to next "@")
+[132] Biber.pm:132> INFO - ERRORS: 1

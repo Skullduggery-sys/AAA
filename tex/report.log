@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2023.9.19)  5 DEC 2023 22:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2023.9.19)  8 DEC 2023 19:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1542,7 +1542,7 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'russian'.
- (./report.aux (./contents.aux) (./introduction.aux))
+ (./report.aux (./contents.aux) (./introduction.aux) (./analysis.aux))
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
@@ -1689,23 +1689,11 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'report.bbl' found.
 
 (./report.bbl)
-Runaway argument?
-{--- [Электронный ресурс] Режим доступа:\ETC.
-! File ended while scanning use of \field.
-<inserted text> 
-                \par 
-l.12 \begin{document}
-                     
-I suspect you have forgotten a `}', causing me
-to read past where you wanted me to stop.
-I'll try to recover; but if the error is serious,
-you'd better type `E' or `X' now and fix your file.
-
 Package biblatex Info: Reference section=0 on input line 12.
 Package biblatex Info: Reference segment=0 on input line 12.
 \AtBeginShipoutBox=\box81
 Package hyperref Info: Link coloring OFF on input line 12.
-(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -1727,7 +1715,7 @@ LaTeX Info: Redefining \nameref on input line 12.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
 (lastpage)             ! on input line 12.
-<bmstu-logo.pdf, id=11, 500.95255pt x 591.38255pt>
+<bmstu-logo.pdf, id=23, 500.95255pt x 591.38255pt>
 File: bmstu-logo.pdf Graphic file (type pdf)
 <use bmstu-logo.pdf>
 Package pdftex.def Info: bmstu-logo.pdf  used on input line 21.
@@ -1776,240 +1764,81 @@ LaTeX Font Warning: Font shape `T2A/cmr/bx/n' in size <16> not available
 ]
 \openout2 = `introduction.aux'.
 
- (./introduction.tex
-! Illegal parameter number in definition of \NewCount.
-<to be read again> 
-                   1
-l.10 	\item
-            Исследовать и описать основы парал...
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-! Illegal parameter number in definition of \NewCount.
-<to be read again> 
-                   1
-l.10 	\item
-            Исследовать и описать основы парал...
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-! Undefined control sequence.
-<argument> \blx@bbl@data 
-                         
-l.10 	\item
-            Исследовать и описать основы парал...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-)
-! Incomplete \iffalse; all text was ignored after line 10.
-<inserted text> 
-                \fi 
-l.23 	\include{introduction}
-                            
-The file ended while I was skipping conditional text.
-This kind of error happens when you say `\if...' and forget
-the matching `\fi'. I've inserted a `\fi'; this might work.
-
-! Missing \endcsname inserted.
-<to be read again> 
-                   \@elt 
-l.23 	\include{introduction}
-                            
-The control sequence marked <to be read again> should
-not appear between \csname and \endcsname.
-
-! You can't use `\relax' after \the.
-<recently read> \c@ 
-                    
-l.23 	\include{introduction}
-                            
-I'm forgetting what you said and using zero instead.
-
-! Extra \else.
-\@include ...ediate \closeout \@partaux \fi \else 
-                                                  \deadcycles \z@ \@nameuse ...
-l.23 	\include{introduction}
-                            
-I'm ignoring this; it doesn't match any \if.
-
-! Undefined control sequence.
-\GenericError  ...                                
-                                                    #4  \errhelp \@err@     ...
-l.24 	\include{analysis}
-                        
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-\GenericError  ...                                
-                                                  \let \@err@               ...
-l.24 	\include{analysis}
-                        
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-\GenericError  ...                                
-                                                  \@empty \def \MessageBreak...
-l.24 	\include{analysis}
-                        
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-\GenericError  ...                                
-                                                     \endgroup 
-l.24 	\include{analysis}
-                        
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-\label #1->\@bsphack \begingroup \def \label@name 
-                                                  {#1}\label@hook \protected...
-l.30 	\makebibliography
-                       
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Argument of \@gobble has an extra }.
-<inserted text> 
-                \par 
-l.30 	\makebibliography
-                       
-I've run across a `}' that doesn't seem to match anything.
-For example, `\def\a#1{...}' and `\a}' would produce
-this error. If you simply proceed now, the `\par' that
-I've just inserted will cause me to report a runaway
-argument that might be the root of the problem. But if
-your `}' was spurious, just type `2' and it will go away.
-
-Runaway argument?
-! Paragraph ended before \@gobble was complete.
-<to be read again> 
-                   \par 
-l.30 	\makebibliography
-                       
-I suspect you've forgotten a `}', causing me to apply this
-control sequence to too much text. How can we recover?
-My plan is to forget the whole thing and hope for the best.
-
-! Use of \\enumerate doesn't match its definition.
-\protected@write ...le@protect \edef \reserved@a {
-                                                  \write #1{#3}}\reserved@a ...
-l.30 	\makebibliography
-                       
-If you say, e.g., `\def\a1{...}', then you must always
-put `1' after `\a', since control sequence names are
-made up of letters only. The macro here has not been
-followed by the required stuff, so I'm ignoring it.
-
-! Argument of \@gobble has an extra }.
-<inserted text> 
-                \par 
-l.30 	\makebibliography
-                       
-I've run across a `}' that doesn't seem to match anything.
-For example, `\def\a#1{...}' and `\a}' would produce
-this error. If you simply proceed now, the `\par' that
-I've just inserted will cause me to report a runaway
-argument that might be the root of the problem. But if
-your `}' was spurious, just type `2' and it will go away.
-
-Runaway argument?
-! Paragraph ended before \@gobble was complete.
-<to be read again> 
-                   \par 
-l.30 	\makebibliography
-                       
-I suspect you've forgotten a `}', causing me to apply this
-control sequence to too much text. How can we recover?
-My plan is to forget the whole thing and hope for the best.
-
-! Use of \\enumerate doesn't match its definition.
-\protected@write ... #1{#3}}\reserved@a \endgroup 
-                                                  \if@nobreak \ifvmode \nobr...
-l.30 	\makebibliography
-                       
-If you say, e.g., `\def\a1{...}', then you must always
-put `1' after `\a', since control sequence names are
-made up of letters only. The macro here has not been
-followed by the required stuff, so I'm ignoring it.
-
-
-AED: lastpage setting LastPage
-[3
+ (./introduction.tex) [3
 
 
 
 ]
+\openout2 = `analysis.aux'.
+
+ (./analysis.tex
+{\cyrillictext \CYRG \cyrl \cyra \cyrv \cyra } 1.
+
+LaTeX Warning: Citation 'intel-multithreading' on page 4 undefined on input lin
+e 5.
+
+
+LaTeX Warning: Citation 'thread' on page 4 undefined on input line 5.
+
+
+LaTeX Warning: Citation 'winForProf' on page 4 undefined on input line 5.
+
+
+LaTeX Warning: Citation 'mult-in-apps' on page 4 undefined on input line 8.
+
+) [4
+
+
+
+]
+
+LaTeX Warning: Empty bibliography on input line 30.
+
+
+AED: lastpage setting LastPage
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 31.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 31.
- (./report.aux (./contents.aux) (./introduction.aux))
+(./report.aux (./contents.aux) (./introduction.aux) (./analysis.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 31.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 31.
+Package rerunfilecheck Info: File `report.out' has not changed.
+(rerunfilecheck)             Checksum: 9EFEF9274754CEE5AA822DBC5FB41D64;784.
 
-
-Package rerunfilecheck Warning: File `report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `report.out':
-(rerunfilecheck)             Before: 4B9C9C3F500B72ADB149B07DB32B807F;108
-(rerunfilecheck)             After:  412492DD63F439766416B5115FD8C669;408.
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.28pt have occurred.
 
+
+LaTeX Warning: There were undefined references.
+
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                report
+(biblatex)                and rerun LaTeX afterwards.
+
 Package logreq Info: Writing requests to 'report.run.xml'.
 \openout1 = `report.run.xml'.
 
- )
-(\end occurred inside a group at level 2)
-
-### semi simple group (level 2) entered at line 12 (\begingroup)
-### semi simple group (level 1) entered at line 12 (\begingroup)
-### bottom level
-(\end occurred when \ifnum on line 23 was incomplete) 
+ ) 
 Here is how much of TeX's memory you used:
- 46806 strings out of 482616
- 1001138 string characters out of 5956823
- 2014827 words of memory out of 5000000
- 60999 multiletter control sequences out of 15000+600000
- 545691 words of font info for 66 fonts, out of 8000000 for 9000
+ 47147 strings out of 482616
+ 1007611 string characters out of 5956823
+ 2021477 words of memory out of 5000000
+ 61299 multiletter control sequences out of 15000+600000
+ 549113 words of font info for 89 fonts, out of 8000000 for 9000
  452 hyphenation exceptions out of 8191
- 94i,19n,144p,1151b,3009s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/en
-c/dvips/cm-super/cm-super-t2a.enc}</usr/share/texmf/fonts/type1/public/cm-super
-/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/
-share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/ty
-pe1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/
-sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1440.pfb>
-Output written on report.pdf (3 pages, 217121 bytes).
+ 94i,19n,144p,1151b,3004s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/share/texmf
+/fonts/enc/dvips/cm-super/cm-super-t2a.enc}</usr/share/texmf/fonts/type1/public
+/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.p
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1440.pf
+b>
+Output written on report.pdf (4 pages, 242899 bytes).
 PDF statistics:
- 61 PDF objects out of 1000 (max. 8388607)
- 48 compressed objects within 1 object stream
- 7 named destinations out of 1000 (max. 500000)
- 15386 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 90 PDF objects out of 1000 (max. 8388607)
+ 76 compressed objects within 1 object stream
+ 16 named destinations out of 1000 (max. 500000)
+ 20530 words of extra memory for PDF output out of 20736 (max. 10000000)
 

@@ -10,7 +10,7 @@
 #include "../inc/time_measurment.h"
 #include "../inc/fuzzyCMeans.h"
 #include <algorithm>
-#define REPS 2000
+#define REPS 1000
 using namespace std;
 
 std::vector<Color*> generate_random_vector(size_t len) {
@@ -77,6 +77,7 @@ void _get_time(std::ofstream& stream, size_t max_len) {
         vector<int> time(threadsCount, 0);
         auto colors = generate_random_vector(i);
         size_t clustersCount = colors.size();
+        //TODO вернуть на 0
         size_t t = 0;
         size_t counter = 0;
         while (t <= threadsCount) {
