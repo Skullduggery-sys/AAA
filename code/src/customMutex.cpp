@@ -1,3 +1,4 @@
+/*
 #include "../inc/customMutex.h"
 
 CustomMutex::CustomMutex() : activeWriter(false) {}
@@ -27,4 +28,4 @@ void CustomMutex::unlock() {
     activeWriter = false;
     helperMutex.unlock();
     mutex.unlock();
-}
+}*/

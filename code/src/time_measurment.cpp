@@ -10,7 +10,7 @@
 #include "../inc/time_measurment.h"
 #include "../inc/fuzzyCMeans.h"
 #include <algorithm>
-#define REPS 1000
+#define REPS 1
 using namespace std;
 
 std::vector<Color*> generate_random_vector(size_t len) {
@@ -66,7 +66,8 @@ void get_time(const std::string& filename, size_t max_len) {
 
 
 void _get_time(std::ofstream& stream, size_t max_len) {
-    size_t i = 2;
+    //TODO поменять на 2
+    size_t i = 102;
     std::locale locale("C");
     stream.imbue(locale);
 

@@ -51,4 +51,5 @@ Matrix<double> parallelFuzzyCMeans(std::vector<Color *> &colors, size_t clusters
 
 Matrix<double> fuzzyCMeans(std::vector<Color *> &colors, size_t clustersCount, double m, std::vector<Centroid *>& centroids);
 
+void parallelNormalizeMembership(Matrix<double> &membership, Borders borders);
 #endif //LAB04_FUZZYCMEANS_H

@@ -1,22 +1,17 @@
 #include "../inc/fuzzyCMeans.h"
-#include "../inc/time_measurment.h"
-#include "../inc/customMutex.h"
+#include "../inc/threadPool.h"
 
 #include <thread>
 #include <mutex>
 #include <random>
 #include <fstream>
-#include <shared_mutex>
-#include <memory>
 #include <iostream>
+#include <memory>
 
-#define MAXREPS 5000
+#define MAXREPS 150
 #define EPS 0.001
 
-std::shared_mutex myMutex;
-std::mutex anotherMutex;
-
-CustomMutex customMutex;
+std::mutex myMutex;
 
 std::vector<Centroid *> generateRandCenters(size_t clustersCount) {
     std::random_device rd;
@@ -35,58 +30,51 @@ Matrix<double> parallelFuzzyCMeans(std::vector<Color *> &colors, size_t clusters
     Matrix<double> membership(colors.size(), clustersCount);
     fillMembership(membership);
 
-    size_t chunkCount;
-    if (clustersCount < threadsCount) {
-        threadsCount = clustersCount;
-        chunkCount = 1;
-    } else {
-        chunkCount = clustersCount / threadsCount;
-    }
+    double prevDecision = 0;
+    double currDecision = 1;
+    ThreadPool tp(threadsCount);
+    for (size_t i = 0; i < MAXREPS && std::abs(currDecision - prevDecision) > EPS; i++) {
+        prevDecision = currDecision;
 
-    std::vector<std::thread> threads;
-    for (size_t t = 0; t < threadsCount; t++) {
-        size_t start = t * chunkCount;
-        size_t end = t == threadsCount - 1 ? clustersCount : (t + 1) * chunkCount;
-        threads.emplace_back(helper, std::ref(colors), std::ref(centers), m, start, end, std::ref(membership));
-    }
 
-    for (auto& thread : threads) {
-        thread.join();
-    }
-    // printf("Размерность: %zu, Потоков: %zu, Время %zu\n", colors.size(), threadsCount, end - start);
 
+        size_t chunksCount = clustersCount / threadsCount;
+        for (size_t t = 0; t < threadsCount; t++) {
+            size_t start = t * chunksCount;
+            size_t end = (t == threadsCount - 1) ? clustersCount : (t + 1) * chunksCount;
+            tp.Submit(renewCenters, std::ref(membership), std::ref(colors), m, start, end, std::ref(centers));
+        }
+        tp.Wait();
+        //renewCenters(membership, colors, m, 0, membership.getNumberOfColumns(), centers);
+
+        chunksCount = colors.size() / threadsCount;
+        for (size_t t = 0; t < threadsCount; t++) {
+            size_t start = t * chunksCount;
+            size_t end = (t == threadsCount - 1) ? colors.size() : (t + 1) * chunksCount;
+            tp.Submit(calculateDistances, std::ref(colors), std::ref(centers), start, end, m, std::ref(membership));
+        }
+
+        tp.Wait();
+
+        for (size_t t = 0; t < threadsCount; t++) {
+            size_t start = t * chunksCount;
+            size_t end = (t == threadsCount - 1) ? colors.size() : (t + 1) * chunksCount;
+            Borders borders(start, end);
+            tp.Submit(parallelNormalizeMembership, std::ref(membership),borders);
+        }
+        tp.Wait();
+        //normalizeMembership(membership);
+        currDecision = decision(colors, centers, membership);
+    }
+    tp.Stop();
     centroids = centers;
     return std::move(membership);
 }
 
-void helper(std::vector<Color*>& colors, std::vector<Centroid*>& centers, double m, size_t start, size_t end, Matrix<double> &membership) {
-    double prevDecision = 0;
-    double currDecision = 1;
-    for (size_t i = 0; i < MAXREPS && std::abs(currDecision - prevDecision) > EPS; i++) { //
-        prevDecision = currDecision;
-
-        customMutex.lock_shared();
-        renewCenters(membership, colors, m, start, end, centers);
-
-        calculateDistances(colors, centers, start, end, m, membership);
-        customMutex.unlock_shared();
-
-        if (customMutex.lock()) {
-            normalizeMembership(membership);
-            customMutex.unlock();
-        }
-
-        Borders border(start, end);
-        customMutex.lock_shared();
-        decision(colors, centers, membership, currDecision, border);
-        customMutex.unlock_shared();
-    }
-}
-
 void calculateDistances(const std::vector<Color*>& colors, const std::vector<Centroid*>& centers,
                         size_t start, size_t end, const double m, Matrix<double>& membership) {
-    for (size_t j = 0; j < membership.getNumberOfRows(); j++) {
-        for (size_t k = start; k < end; k++) {
+    for (size_t j = start; j < end; j++) {
+        for (size_t k = 0; k < membership.getNumberOfColumns(); k++) {
             auto dist = distToCenter(colors[j], centers[k]);
             membership[j][k] = calculateU(dist, m);
         }
@@ -121,14 +109,14 @@ Matrix<double> fuzzyCMeans(std::vector<Color *> &colors, size_t clustersCount, d
 void decision(const std::vector<Color *> &colors, const std::vector<Centroid *> &centers,
               const Matrix<double> &membership, double &distance, Borders &borders) {
     double sum = 0;
-    for (size_t i = 0; i < membership.getNumberOfRows(); i++) {
-        for (size_t j = borders.start; j < borders.end; j++) {
+    for (size_t i = borders.start; i < borders.end; i++) {
+        for (size_t j = 0; j < centers.size(); j++) {
             sum += membership[i][j] * distToCenter(colors[i], centers[j]);
         }
     }
-    anotherMutex.lock();
-    distance = sum;
-    anotherMutex.unlock();
+    myMutex.lock();
+    distance += sum;
+    myMutex.unlock();
 }
 
 double decision(const std::vector<Color *> &colors, const std::vector<Centroid *> &centers, const Matrix<double> &membership) {
@@ -161,6 +149,7 @@ void renewCenters(const Matrix<double> &membership, std::vector<Color *> &colors
         double tempBg = 0.0;
         //double tempAb = 0.0;
         double tempBb = 0.0;
+
 
         for (size_t key = 0; key < membership.getNumberOfRows(); ++key) {
             tempA += std::pow(membership[key][i], m);
@@ -202,6 +191,21 @@ void normalizeMembership(Matrix<double> &membership) {
 
         for (size_t j = 0; j < membership.getNumberOfColumns(); j++) {
             membership[i][j] /= sum;
+        }
+    }
+}
+
+void parallelNormalizeMembership(Matrix<double> &membership, Borders borders) {
+    for (size_t i = borders.start; i < borders.end; i++) {
+        double sum = 0;
+        //std::cout << "read " << borders.start << " " << borders.end << " " << i << " " << " " << std::endl;
+        for (size_t j = 0; j < membership.getNumberOfColumns(); j++) {
+            sum += membership[i][j];
+        }
+
+        //std::cout << "write " << borders.start << " " << borders.end << " " << i << " " << " " << std::endl;
+        for (size_t j = 0; j < membership.getNumberOfColumns(); j++) {
+            membership[i][j] = membership[i][j] /  sum;
         }
     }
 }
